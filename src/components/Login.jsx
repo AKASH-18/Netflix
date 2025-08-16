@@ -1,61 +1,76 @@
 import { checkValidData } from "../utils/validate.jsx";
 import Header from "./Header";
 import { use, useRef, useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from "../utils/firebase.jsx";
-import { useNavigate } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase.jsx";
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-  const Navigate = useNavigate();
-
-
+  
+ 
 
   const handleButtonClick = () => {
-  // ✅ First, validate and store the message
-  const message = checkValidData(
-    email.current.value,
-    password.current.value
-  );
+    // ✅ First, validate and store the message
+    const message = checkValidData(email.current.value, password.current.value);
 
-  // ✅ Then, update state
-  setErrorMessage(message);
+    // ✅ Then, update state
+    setErrorMessage(message);
 
-  // If there's an error message, stop here
-  if (message) return;
+    // If there's an error message, stop here
+    if (message) return;
 
-  if (!isSignInForm) {
-    // Sign Up
-    createUserWithEmailAndPassword(
-      auth,
-      email.current.value,
-      password.current.value
-    )
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("User signed up:", userCredential.user);
-        Navigate("/browse");
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
-      });
-  } else {
-    // Sign p (you still need to implement this)
-    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-      
-    .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("User signed in:", user);
-        Navigate("/browse")
-      }
-    )
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message; 
-      setErrorMessage(errorMessage);
-  })
+    if (!isSignInForm) {
+      // Sign Up
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg",
+          })
+            .then(() => {
+              // Profile updated!
+            
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+              setErrorMessage(error.message);
+            });
+        
+        })
+        .catch((error) => {
+          setErrorMessage(error.message);
+        });
+    } else {
+      // Sign p (you still need to implement this)
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+        
+         
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+        });
     }
   };
 

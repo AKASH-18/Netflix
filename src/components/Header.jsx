@@ -40,12 +40,12 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute px-8 py-2 z-10 bg-gradient-to-b from-black flex jutify-space-between ">
-      <img className="w-32" src={LOGO} alt="" />
+    <div className="absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+      <img className="w-32 mx-auto md:mx-0" src={LOGO} alt="" />
 
-      <div className="flex">
-        <img className="w-12 flex" src={user?.photoURL || PHOTO} alt="" />
-        <button onClick={handleSignOut}>SignOut</button>
+      <div className="flex justify-between px-4 ">
+        <img className="w-12 flex " src={user?.photoURL || PHOTO} alt="" />
+        <button className= "text-amber-50 cursor-pointer" onClick={handleSignOut}>SignOut</button>
       </div>
     </div>
   );

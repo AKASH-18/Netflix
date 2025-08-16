@@ -9,7 +9,7 @@ const Browse = () => {
   usePopularMovies();
 
   return (
-    <div>
+    <div className="w-full overflow-hidden">
       <Header />
       <MainContainer />
       <SecondaryContainer />

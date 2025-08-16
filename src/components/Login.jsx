@@ -13,8 +13,6 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-  
- 
 
   const handleButtonClick = () => {
     // ✅ First, validate and store the message
@@ -42,14 +40,12 @@ const Login = () => {
           })
             .then(() => {
               // Profile updated!
-            
             })
             .catch((error) => {
               // An error occurred
               // ...
               setErrorMessage(error.message);
             });
-        
         })
         .catch((error) => {
           setErrorMessage(error.message);
@@ -63,8 +59,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-        
-         
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -80,7 +74,7 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute w-full">
+      <div className="absolute w-screen">
         <img
           className=" "
           src="https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/IN-en-20250721-TRIFECTA-perspective_cadc8408-df6e-4313-a05d-daa9dcac139f_medium.jpg"
